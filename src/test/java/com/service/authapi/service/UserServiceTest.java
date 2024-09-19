@@ -2,20 +2,19 @@ package com.service.authapi.service;
 
 import com.service.authapi.model.User;
 import com.service.authapi.repository.UserRepository;
-import com.service.authapi.service.UserService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
@@ -30,12 +29,7 @@ public class UserServiceTest {
         expectedUsers.add(new User("user1", "password1"));
         expectedUsers.add(new User("user2", "password2"));
 
-        // Create a mock repository
-        UserRepository mockRepository = mock(UserRepository.class);
-        when(mockRepository.findAll()).thenReturn(expectedUsers);
-
-        // Create UserService with the mock repository
-        UserService userService = new UserService(mockRepository);
+        when(userRepository.findAll()).thenReturn(expectedUsers);
 
         List<User> actualUsers = userService.allUsers();
 
